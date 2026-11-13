@@ -16,7 +16,7 @@ jobs:
       - name: Install Android SDK components
         run: |
           cd "$ANDROID_HOME/cmdline-tools"
-          curl -sSL -o ct.zip https://dl.google.com/android/repository/commandlinetools-linux-latest.zip
+          curl -sSL -o ct.zip https://dl.google.com/android/repository/commandlinetools-linux-16111833_latest.zip
           rm -rf latest && mkdir latest && unzip -q ct.zip -d latest && mv latest/cmdline-tools/* latest/ && rm -rf latest/cmdline-tools ct.zip
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" "ndk;29.0.14206865" "cmake;3.22.1"
