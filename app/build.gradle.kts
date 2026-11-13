@@ -135,7 +135,7 @@ android {
     @Suppress("UnstableApiUsage")
     androidResources {
         localeFilters.add("en")
-        localeFilters.add("zh-rCN")
+        localeFilters.add("ar")
     }
 }
 
