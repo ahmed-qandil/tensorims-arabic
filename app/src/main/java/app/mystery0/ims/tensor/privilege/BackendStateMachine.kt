@@ -1,19 +1,21 @@
 package app.mystery0.ims.tensor.privilege
 
+import app.mystery0.ims.tensor.R
+
 /** 不依赖 Android 的安全状态机，由统一调度器串行调用。 */
 class BackendStateMachine(mode: BackendMode = BackendMode.UNSET, unresolved: Boolean = false) {
     @Volatile var status = BackendStatus(
         mode = mode,
         connection = if (unresolved) ConnectionState.RECOVERY_REQUIRED else ConnectionState.DISCONNECTED,
         errorCode = if (unresolved) "RECOVERY_REQUIRED" else null,
-        message = if (unresolved) "上次操作尚未确认结束，请先核对；必要时重启设备后重试" else null,
+        message = if (unresolved) BackendStrings.get(R.string.err_prev_op_unconfirmed) else null,
     )
         private set
     @Volatile var activeOperationId: String? = null
         private set
 
     @Synchronized fun choose(mode: BackendMode): String? {
-        if (freezeForSwitch() == null) return "操作尚未结束或需要恢复，请完成核对后再切换"
+        if (freezeForSwitch() == null) return BackendStrings.get(R.string.err_op_unfinished_switch)
         completeSwitch(mode)
         return null
     }
@@ -46,7 +48,7 @@ class BackendStateMachine(mode: BackendMode = BackendMode.UNSET, unresolved: Boo
     @Synchronized fun completeIdleStop(): Boolean {
         if (status.mode != BackendMode.EMBEDDED || status.connection != ConnectionState.SWITCHING || activeOperationId != null) return false
         status = BackendStatus(mode = BackendMode.EMBEDDED, connection = ConnectionState.DISCONNECTED,
-            epoch = status.epoch + 1, errorCode = "EMBEDDED_UNAVAILABLE", message = "请主动启动内置服务")
+            epoch = status.epoch + 1, errorCode = "EMBEDDED_UNAVAILABLE", message = BackendStrings.get(R.string.err_start_embedded_service))
         return true
     }
 
@@ -76,7 +78,7 @@ class BackendStateMachine(mode: BackendMode = BackendMode.UNSET, unresolved: Boo
     @Synchronized fun uncertain(operationId: String, epoch: Long) {
         if (operationId != activeOperationId || epoch != status.epoch) return
         status = status.copy(connection = ConnectionState.RECOVERY_REQUIRED, errorCode = "OPERATION_INDETERMINATE",
-            message = "操作结果或权限清理尚未确认；不会自动重试，请等待旧任务结束后刷新核对")
+            message = BackendStrings.get(R.string.err_result_unconfirmed_no_retry))
     }
 
     @Synchronized fun finish(operationId: String, epoch: Long, cleanupConfirmed: Boolean): Boolean {
@@ -96,7 +98,7 @@ class BackendStateMachine(mode: BackendMode = BackendMode.UNSET, unresolved: Boo
         if (activeOperationId != null || !terminalConfirmed || !authenticated || !readBackConfirmed) return false
         if (status.mode == BackendMode.UNSET) return false
         status = status.copy(connection = ConnectionState.READY, errorCode = null,
-            message = "已核对当前系统状态，未重放上次操作；自动恢复仍暂停，请核对后将开关关闭再开启")
+            message = BackendStrings.get(R.string.err_state_checked_auto_restore_paused))
         return true
     }
 }

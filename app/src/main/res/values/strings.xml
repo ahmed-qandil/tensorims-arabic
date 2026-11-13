@@ -2,7 +2,6 @@
 <resources>
     <string name="ims_restore_system_defaults">Restore system defaults</string>
     <string name="app_name">TensorIMS</string>
-    <string name="for_pixel">Maintained by Mystery0</string>
 
     <!-- Main Screen -->
     <string name="system_info">System Info</string>
@@ -249,4 +248,58 @@
     <string name="app_language">Language</string>
     <string name="app_language_auto">Auto (follow system)</string>
     <string name="app_language_summary">Choose the display language for this app. Changes apply immediately.</string>
+    <string name="err_prev_op_unconfirmed">The previous operation has not been confirmed as finished. Check it first; restart the device and retry if needed.</string>
+    <string name="err_op_unfinished_switch">The operation has not finished or needs recovery. Complete the check before switching.</string>
+    <string name="err_start_embedded_service">Start the embedded service manually.</string>
+    <string name="err_result_unconfirmed_no_retry">The operation result or permission cleanup is not confirmed. It will not retry automatically; wait for the old task to finish, then refresh and check.</string>
+    <string name="err_state_checked_auto_restore_paused">Current system state checked; the previous operation was not replayed. Auto-restore is still paused; check, then turn the switch off and on again.</string>
+    <string name="err_old_op_unconfirmed">The old operation or permission cleanup is not confirmed.</string>
+    <string name="err_verify_embedded_restart">Could not verify the embedded service. Restart it.</string>
+    <string name="err_start_shizuku">Start the external Shizuku app first.</string>
+    <string name="err_update_shizuku">Update the external Shizuku app.</string>
+    <string name="err_grant_shizuku">Allow TensorIMS to use the external Shizuku.</string>
+    <string name="err_connect_shizuku">Could not connect to the external Shizuku. Check the service state.</string>
+    <string name="err_backend_not_init">The backend is not initialized yet.</string>
+    <string name="err_switch_incomplete_refresh">The switch did not complete. Refresh the current backend and retry.</string>
+    <string name="err_switch_incomplete_kept">The switch did not complete; the original mode was kept. Refresh and retry.</string>
+    <string name="err_op_running_switch_later">The current operation has not finished. Switch later.</string>
+    <string name="err_old_backend_closing">The old backend is not confirmed safely closed. Retry later.</string>
+    <string name="err_old_backend_closing_no_switch">The old backend is not confirmed safely closed; the mode was not switched.</string>
+    <string name="err_save_mode">Could not save the mode selection.</string>
+    <string name="err_backend_state_changed">The backend state changed. Refresh and retry.</string>
+    <string name="err_op_running_switch">The current operation is not complete. Switch later.</string>
+    <string name="err_embedded_stop_unconfirmed">The embedded service stop is not confirmed. Refresh and check.</string>
+    <string name="err_autostart_stale">The auto-start request is stale or the current operation does not allow starting.</string>
+    <string name="err_select_embedded_first">Select embedded mode first.</string>
+    <string name="err_old_op_needs_recovery">The old operation needs recovery; a new service cannot be started.</string>
+    <string name="err_op_running_start_later">The current operation is not complete. Start later.</string>
+    <string name="err_embedded_start_failed">The embedded service failed to start. Check the start method.</string>
+    <string name="err_request_stale_mode_changed">The request was cancelled or the mode already changed.</string>
+    <string name="err_connect_backend_first">Select and connect a privileged backend first.</string>
+    <string name="err_invalid_params">Invalid operation parameters; not executed.</string>
+    <string name="err_op_already_running">An operation is already running.</string>
+    <string name="err_journal_save_blocked">The operation record could not be saved reliably; execution was blocked.</string>
+    <string name="err_result_unconfirmed_retry">The operation result is not confirmed. It will not retry automatically; refresh and check later.</string>
+    <string name="err_terminal_missing_result">The written final state lacks an operation result. Check the current system state first.</string>
+    <string name="err_broker_terminal_missing">The broker written final state lacks an operation result. Check first.</string>
+    <string name="err_cleanup_unconfirmed_recover">The operation or cleanup result is not confirmed. Recover and check first.</string>
+    <string name="err_reset_terminal_incomplete">The reset final state is incomplete. Recover and check first.</string>
+    <string name="err_reset_guard_save_failed">The reset recovery guard could not be saved reliably. Recover and check first.</string>
+    <string name="err_journal_incomplete_refresh">The operation record is not complete. Refresh and check.</string>
+    <string name="err_op_not_started">The operation did not start.</string>
+    <string name="err_auto_apply_paused">Auto-apply was paused safely. After checking the current configuration, turn the switch off and on again.</string>
+    <string name="err_restore_unconfirmed_kept">The restore could not be confirmed; the original-value backup and operation record were kept. Check later.</string>
+    <string name="err_no_persistent_volte_op">There is no persistent VoLTE operation to restore.</string>
+    <string name="err_old_op_unfinished_reboot">The old operation is not confirmed finished. Wait, or restart the device and check.</string>
+    <string name="err_restore_backend_first">Restore the connection to the currently selected backend first.</string>
+    <string name="err_restore_result_unconfirmed">The restore result is not confirmed; the original-value backup and operation record were kept. Refresh and check.</string>
+    <string name="err_checking_restore_later">A check is in progress. Restore later.</string>
+    <string name="err_reboot_connect_refresh">Restart the device first, then connect the selected backend and refresh state.</string>
+    <string name="err_connect_authorize_first">Connect the selected backend and complete authorization first.</string>
+    <string name="err_check_failed_reboot">The check did not pass; the record and backup were kept. Restart the device and retry.</string>
+    <string name="err_check_in_progress">The check is still in progress; the record and backup were kept. Refresh state later.</string>
+    <string name="err_op_running_check_later">The current operation is not complete. Check later.</string>
+    <string name="err_check_failed_refresh">Could not complete the check; the record and backup were kept. Refresh state.</string>
+    <string name="err_checked_corrupt_kept">Current state checked and the corrupt record was kept; the last operation result could not be confirmed. Check the IMS configuration, system network and VoLTE original-value backup; auto-apply is still paused.</string>
+    <string name="err_reset_clear_unverified">Attempted to clear the carrier configuration overrides, but the system provided no independently verifiable evidence that deletion completed, so this was not recorded as a successful reset. Check the current configuration first; auto-restore remains paused.</string>
 </resources>

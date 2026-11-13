@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_auto_start_title">تشغيل الخدمة الداخلية تلقائياً عند فتح التطبيق</string>
+    <string name="embedded_auto_start_description">معطَّل افتراضياً. عند فتح التطبيق، يحاول الاتصال بالخدمة الداخلية وتشغيلها باستخدام إقران التصحيح اللاسلكي الموجود. يتطلب تصحيحاً لاسلكياً متاحاً والأذونات اللازمة. لا يعيد الإقران تلقائياً ولا يستخدم الروت.</string>
+    <string name="embedded_auto_start_independent">بعد البدء، يتحكم مفتاح التطبيق التلقائي في الشاشة الرئيسية في ما إذا كانت الإعدادات المحفوظة ستُطبَّق.</string>
+    <string name="embedded_auto_start_waiting">ستُفحص شروط البدء عند فتحك التطبيق في المرة القادمة.</string>
+    <string name="embedded_auto_start_checking">جارٍ فحص شروط البدء التلقائي…</string>
+    <string name="embedded_auto_start_ready">الخدمة الداخلية جاهزة. لا حاجة لمزيد من البدء.</string>
+    <string name="embedded_auto_start_busy">تُخطيت هذه المحاولة لأن عملية أخرى كانت نشطة. استخدم خياراً يدوياً أو أعد فتح التطبيق للمحاولة مجدداً.</string>
+    <string name="embedded_auto_start_recovery">التحقق من العملية مطلوب. أكمله أولاً؛ لا يمكن للبدء التلقائي تجاوز هذه الحالة.</string>
+    <string name="embedded_auto_start_notifications">البدء التلقائي غير متاح: اسمح بإشعارات التطبيق وفعّل قناة إشعارات البدء اللاسلكي.</string>
+    <string name="embedded_auto_start_local_network">البدء التلقائي غير متاح: اسمح بالوصول إلى الشبكة المحلية.</string>
+    <string name="embedded_auto_start_credentials">البدء التلقائي غير متاح: تعذّرت قراءة بيانات اعتماد الإقران الموجودة. أكمل إقران التصحيح اللاسلكي يدوياً أولاً.</string>
+    <string name="embedded_auto_start_failed">فشل البدء التلقائي هذه المرة. تحقق من توفر التصحيح اللاسلكي أو استخدم خياراً يدوياً.</string>
+    <string name="embedded_auto_start_cancelled">أُلغي البدء التلقائي. لم تُجرَ إعادة محاولة تلقائية.</string>
+    <string name="embedded_auto_start_permissions">إدارة أذونات البدء</string>
+    <string name="embedded_auto_start_notification">جارٍ التشغيل التلقائي للخدمة الداخلية</string>
+    <string name="embedded_auto_start_blocked">البدء التلقائي غير متاح في الحالة الحالية. تحقق من حالة الخلفية أو استخدم خياراً يدوياً.</string>
+</resources>

@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+import app.mystery0.ims.tensor.R
 
 /** 只按用户选择路由；未知结果保留后台任务和持久化安全门，绝不自动重放写入。 */
 object PrivilegeRuntime {
@@ -93,15 +94,15 @@ object PrivilegeRuntime {
     }
 
     suspend fun chooseMode(mode: BackendMode): String? {
-        if (!initialized) return "后端尚未初始化"
+        if (!initialized) return BackendStrings.get(R.string.err_backend_not_init)
         var previous: BackendStatus? = null
         return try { chooseModeLocked(mode) { previous = it } }
         catch (cancelled: CancellationException) { throw cancelled }
         catch (failure: Exception) {
-            previous?.let { machine.abortSwitch(it, "SWITCH_FAILED", "切换未完成，请刷新当前后端后重试") }
+            previous?.let { machine.abortSwitch(it, "SWITCH_FAILED", BackendStrings.get(R.string.err_switch_incomplete_refresh)) }
             publish()
             Log.e(TAG, "Backend switch failed", failure)
-            "切换未完成，已保留原模式，请刷新后重试"
+            BackendStrings.get(R.string.err_switch_incomplete_kept)
         }
     }
 
@@ -110,28 +111,28 @@ object PrivilegeRuntime {
         val error = OperationCoordinator.tryExclusive {
             entered = true
             if (machine.status.connection == ConnectionState.RECOVERY_REQUIRED || machine.activeOperationId != null) {
-                return@tryExclusive "操作尚未结束或需要恢复，请完成核对后再切换"
+                return@tryExclusive BackendStrings.get(R.string.err_op_unfinished_switch)
             }
             if (mode == machine.status.mode) { connectLocked(); return@tryExclusive null }
-            val old = machine.freezeForSwitch() ?: return@tryExclusive "当前操作尚未结束，请稍后再切换"
+            val old = machine.freezeForSwitch() ?: return@tryExclusive BackendStrings.get(R.string.err_op_running_switch_later)
             rememberPrevious(old)
             publish()
             if (old.mode != BackendMode.UNSET && !backend(old.mode).disconnect()) {
-                machine.abortSwitch(old, "SHUTDOWN_UNCONFIRMED", "旧后端尚未确认安全关闭，请稍后重试")
+                machine.abortSwitch(old, "SHUTDOWN_UNCONFIRMED", BackendStrings.get(R.string.err_old_backend_closing))
                 publish()
-                return@tryExclusive "旧后端尚未确认安全关闭，未切换模式"
+                return@tryExclusive BackendStrings.get(R.string.err_old_backend_closing_no_switch)
             }
             if (!preferences().edit().putInt("schema", 1).putString("chosen_mode", mode.name).commit()) {
-                machine.abortSwitch(old, "PREFERENCE_FAILED", "无法保存模式选择")
+                machine.abortSwitch(old, "PREFERENCE_FAILED", BackendStrings.get(R.string.err_save_mode))
                 publish()
-                return@tryExclusive "无法保存模式选择"
+                return@tryExclusive BackendStrings.get(R.string.err_save_mode)
             }
-            if (!machine.completeSwitch(mode)) return@tryExclusive "后端状态已变化，请刷新后重试"
+            if (!machine.completeSwitch(mode)) return@tryExclusive BackendStrings.get(R.string.err_backend_state_changed)
             publish()
             connectLocked()
             null
         }
-        return if (entered) error else "当前操作尚未完成，请稍后再切换"
+        return if (entered) error else BackendStrings.get(R.string.err_op_running_switch)
     }
 
     /** 与写入、历史提交和模式切换共用安全门；计时到期不等于允许停止。 */
@@ -152,12 +153,12 @@ object PrivilegeRuntime {
                     Log.i(TAG, "Idle embedded service shutdown confirmed")
                     true
                 } else {
-                    machine.abortSwitch(previous, "SHUTDOWN_UNCONFIRMED", "内置服务停止尚未确认，请刷新后核对")
+                    machine.abortSwitch(previous, "SHUTDOWN_UNCONFIRMED", BackendStrings.get(R.string.err_embedded_stop_unconfirmed))
                     Log.w(TAG, "Idle embedded service shutdown unconfirmed")
                     false
                 }
             } catch (failure: Exception) {
-                machine.abortSwitch(previous, "SHUTDOWN_UNCONFIRMED", "内置服务停止尚未确认，请刷新后核对")
+                machine.abortSwitch(previous, "SHUTDOWN_UNCONFIRMED", BackendStrings.get(R.string.err_embedded_stop_unconfirmed))
                 Log.w(TAG, "Idle embedded service shutdown failed", failure)
                 false
             } finally { publish() }
@@ -223,19 +224,19 @@ object PrivilegeRuntime {
     }
 
     suspend fun startEmbedded(automaticEpoch: Long? = null, canStart: () -> Boolean = { true }, action: suspend () -> String?): String? {
-        if (!initialized) return "后端尚未初始化"
+        if (!initialized) return BackendStrings.get(R.string.err_backend_not_init)
         var entered = false
         val result = OperationCoordinator.tryExclusive {
             entered = true
             if (!canStart() || (automaticEpoch != null && !automaticStartStateSafe(automaticEpoch))) {
-                return@tryExclusive "自动启动请求已失效或当前操作不允许启动"
+                return@tryExclusive BackendStrings.get(R.string.err_autostart_stale)
             }
-            if (machine.status.mode != BackendMode.EMBEDDED) return@tryExclusive "请先选择内置模式"
+            if (machine.status.mode != BackendMode.EMBEDDED) return@tryExclusive BackendStrings.get(R.string.err_select_embedded_first)
             val recovering = machine.status.connection == ConnectionState.RECOVERY_REQUIRED
             if (machine.activeOperationId != null || (recovering && !_canStartEmbeddedForRecovery.value)) {
-                return@tryExclusive "旧操作需要恢复，不能启动新服务"
+                return@tryExclusive BackendStrings.get(R.string.err_old_op_needs_recovery)
             }
-            if (!recovering && !machine.beginConnection()) return@tryExclusive "当前操作尚未完成，请稍后再启动"
+            if (!recovering && !machine.beginConnection()) return@tryExclusive BackendStrings.get(R.string.err_op_running_start_later)
             publish()
             val error = try {
                 if (!canStart()) throw CancellationException("Embedded startup request revoked")
@@ -247,14 +248,14 @@ object PrivilegeRuntime {
                 throw cancelled
             } catch (failure: Exception) {
                 Log.w(TAG, "Embedded start failed (${failure.javaClass.simpleName})")
-                "内置服务启动失败，请检查启动方式"
+                BackendStrings.get(R.string.err_embedded_start_failed)
             }
             if (recovering) {
                 if (corruptJournal) refreshCorruptLocked() else reconcileLocked()
             } else connectLocked()
             error
         }
-        return if (entered) result else "当前操作尚未完成，请稍后再启动"
+        return if (entered) result else BackendStrings.get(R.string.err_op_running_start_later)
     }
 
     suspend fun execute(
@@ -264,19 +265,19 @@ object PrivilegeRuntime {
         val requested = status.value
         return OperationCoordinator.serialized {
             if (!canStart() || requested.epoch != machine.status.epoch || requested.mode != machine.status.mode) {
-                return@serialized errorResult(args, "请求已取消或模式已经变化", "REQUEST_CANCELLED")
+                return@serialized errorResult(args, BackendStrings.get(R.string.err_request_stale_mode_changed), "REQUEST_CANCELLED")
             }
             if (!machine.status.isReady || machine.status.mode == BackendMode.UNSET) {
-                return@serialized errorResult(args, machine.status.message ?: "请先选择并连接特权后端", machine.status.errorCode ?: "NOT_READY")
+                return@serialized errorResult(args, machine.status.message ?: BackendStrings.get(R.string.err_connect_backend_first), machine.status.errorCode ?: "NOT_READY")
             }
             val arguments = try {
                 OperationArguments.preflight(operation, args?.let(::Bundle) ?: Bundle())
             } catch (failure: IllegalArgumentException) {
-                return@serialized errorResult(args, "操作参数无效，未执行", "INVALID_ARGUMENTS")
+                return@serialized errorResult(args, BackendStrings.get(R.string.err_invalid_params), "INVALID_ARGUMENTS")
             }
             val id = UUID.randomUUID().toString()
             val epoch = machine.status.epoch
-            if (!machine.begin(id)) return@serialized errorResult(args, "已有操作正在执行", "BUSY")
+            if (!machine.begin(id)) return@serialized errorResult(args, BackendStrings.get(R.string.err_op_already_running), "BUSY")
             val subId = subId(arguments)
             val record = OperationRecord(id, machine.status.mode, operation.name, epoch, bootCount(), subId,
                 identityDigest = arguments.getString(TargetConfigProtocol.IDENTITY),
@@ -290,7 +291,7 @@ object PrivilegeRuntime {
                     recoveryReason = recoveryReason) }
                 preferences().edit().putBoolean("restore_paused", true).commit()
                 publish()
-                return@serialized errorResult(arguments, "无法可靠保存操作记录，已阻止执行", "JOURNAL_FAILED")
+                return@serialized errorResult(arguments, BackendStrings.get(R.string.err_journal_save_blocked), "JOURNAL_FAILED")
             }
             publish()
             val selected = backend(record.mode)
@@ -304,7 +305,7 @@ object PrivilegeRuntime {
                 else {
                     markUnknown(record, RecoveryReason.TIMEOUT)
                     awaitLate(task, record, arguments)
-                    errorResult(arguments, "操作结果尚未确认；不会自动重试，请稍后刷新核对", "OPERATION_INDETERMINATE")
+                    errorResult(arguments, BackendStrings.get(R.string.err_result_unconfirmed_retry), "OPERATION_INDETERMINATE")
                 }
             } catch (cancelled: CancellationException) {
                 markUnknown(record, RecoveryReason.CANCELLED)
@@ -341,7 +342,7 @@ object PrivilegeRuntime {
         var result = selected.execute(context, operation, arguments, record.operationId, record.epoch)
         requireClean(result)
         if (operation.isWrite && result == null) {
-            return errorResult(arguments, "写入终态缺少业务结果，请先核对当前系统状态", "OPERATION_INDETERMINATE")
+            return errorResult(arguments, BackendStrings.get(R.string.err_terminal_missing_result), "OPERATION_INDETERMINATE")
                 .apply { putBoolean(BridgeProtocol.CLEANUP_CONFIRMED, true) }
         }
         if (operation == OperationType.APPLY_CONFIG && canStart() &&
@@ -349,7 +350,7 @@ object PrivilegeRuntime {
             result = selected.execute(context, OperationType.BROKER_CONFIG, Bundle(arguments), "${record.operationId}-fallback", record.epoch)
             requireClean(result)
             if (result == null) {
-                return errorResult(arguments, "Broker 写入终态缺少业务结果，请先核对", "OPERATION_INDETERMINATE")
+                return errorResult(arguments, BackendStrings.get(R.string.err_broker_terminal_missing), "OPERATION_INDETERMINATE")
                     .apply { putBoolean(BridgeProtocol.CLEANUP_CONFIRMED, true) }
             }
         }
@@ -393,7 +394,7 @@ object PrivilegeRuntime {
             Log.e(TAG, "Operation outcome is unconfirmed", failure)
             markUnknown(record, if (failure is OperationUncertainException && failure.cleanupUnconfirmed)
                 RecoveryReason.CLEANUP_UNCONFIRMED else RecoveryReason.OUTCOME_UNKNOWN)
-            return errorResult(args, "操作或清理结果尚未确认，请先恢复核对", "OPERATION_INDETERMINATE")
+            return errorResult(args, BackendStrings.get(R.string.err_cleanup_unconfirmed_recover), "OPERATION_INDETERMINATE")
         }
         if (outcome.result?.getString(BridgeProtocol.ERROR_CODE) == CarrierResetCompletionPolicy.UNVERIFIED) {
             val expected = pending?.takeIf { it.operationId == record.operationId }?.targetIdentities?.keys.orEmpty()
@@ -405,7 +406,7 @@ object PrivilegeRuntime {
                     outcome.result.getIntArray(BridgeProtocol.UNVERIFIED_RESET_SUB_IDS)?.toSet().orEmpty(), false)
             if (!valid) {
                 markUnknown(record, RecoveryReason.OUTCOME_UNKNOWN)
-                return errorResult(args, "重置终态不完整，请先恢复核对", "OPERATION_INDETERMINATE")
+                return errorResult(args, BackendStrings.get(R.string.err_reset_terminal_incomplete), "OPERATION_INDETERMINATE")
             }
             try {
                 // 已知请求与清理完成，可继续使用后端；先可靠保存恢复保护再清除操作日志。
@@ -416,7 +417,7 @@ object PrivilegeRuntime {
             } catch (failure: Exception) {
                 Log.e(TAG, "Reset restoration protection could not be persisted", failure)
                 markUnknown(record, RecoveryReason.JOURNAL_IO)
-                return errorResult(args, "无法可靠保存重置恢复保护，请先恢复核对", "JOURNAL_FAILED")
+                return errorResult(args, BackendStrings.get(R.string.err_reset_guard_save_failed), "JOURNAL_FAILED")
             }
         }
         if (outcome.result?.getString(BridgeProtocol.ERROR_CODE) == "OPERATION_INDETERMINATE") {
@@ -432,11 +433,11 @@ object PrivilegeRuntime {
         } catch (journalFailure: Exception) {
             Log.e(TAG, "Operation journal completion failed", journalFailure)
             markUnknown(record, RecoveryReason.JOURNAL_IO)
-            return errorResult(args, "操作记录尚未完成，请刷新核对", "JOURNAL_FAILED")
+            return errorResult(args, BackendStrings.get(R.string.err_journal_incomplete_refresh), "JOURNAL_FAILED")
         }
         machine.finish(record.operationId, record.epoch, true)
         publish()
-        return if (failure != null) errorResult(args, failure.message ?: "操作未启动", "NOT_STARTED") else outcome.result
+        return if (failure != null) errorResult(args, failure.message ?: BackendStrings.get(R.string.err_op_not_started), "NOT_STARTED") else outcome.result
     }
 
     private fun markUnknown(record: OperationRecord, reason: RecoveryReason) {
@@ -454,7 +455,7 @@ object PrivilegeRuntime {
         if (machine.status.mode == BackendMode.UNSET) { publish(); return }
         val connection = backend(machine.status.mode).connect(context, machine.status.epoch)
         machine.updateConnection(if (connection.isReady && preferences().getBoolean("restore_paused", false))
-            connection.copy(message = "自动应用已安全暂停；核对当前配置后，请将开关关闭再开启") else connection)
+            connection.copy(message = BackendStrings.get(R.string.err_auto_apply_paused)) else connection)
         publish()
     }
 
@@ -561,23 +562,23 @@ object PrivilegeRuntime {
     } catch (failure: Exception) {
         Log.e(TAG, "Explicit recovery remains blocked", failure)
         publish()
-        "恢复无法确认，原值备份与操作记录已保留，请稍后核对"
+        BackendStrings.get(R.string.err_restore_unconfirmed_kept)
     }
 
     private suspend fun recoverPersistentVolteLocked(): String? {
-        if (!initialized) return "后端尚未初始化"
+        if (!initialized) return BackendStrings.get(R.string.err_backend_not_init)
         var entered = false
         val result = OperationCoordinator.tryExclusive {
             entered = true
-            val record = pending ?: return@tryExclusive "没有需要恢复的持久化 VoLTE 操作"
+            val record = pending ?: return@tryExclusive BackendStrings.get(R.string.err_no_persistent_volte_op)
             if (recoveryInFlight || !record.dispatched || record.targetIdentities.isEmpty() ||
                 record.operation !in persistentWrites.map { it.name } || !oldOperationEnded(record)) {
-                return@tryExclusive "旧操作尚未确认结束，请等待或重启设备后核对"
+                return@tryExclusive BackendStrings.get(R.string.err_old_op_unfinished_reboot)
             }
             val selected = backend(machine.status.mode)
             val connection = selected.connect(context, machine.status.epoch)
             if (record.mode != machine.status.mode || !connection.isReady) {
-                return@tryExclusive "请先恢复当前所选后端连接"
+                return@tryExclusive BackendStrings.get(R.string.err_restore_backend_first)
             }
             // 必须在启动恢复任务之前落盘，避免恢复本身在进程重建后被再次执行。
             updatePending { it.copy(phase = OperationPhase.UNKNOWN, cleanupConfirmed = false, bootCount = bootCount(), dispatched = true) }
@@ -624,10 +625,10 @@ object PrivilegeRuntime {
                         publish()
                     }
                 }
-                "恢复结果尚未确认；原值备份和操作记录已保留，请刷新核对"
+                BackendStrings.get(R.string.err_restore_result_unconfirmed)
             }
         }
-        return if (entered) result else "当前正在核对，请稍后再恢复"
+        return if (entered) result else BackendStrings.get(R.string.err_checking_restore_later)
     }
 
     private fun oldOperationEnded(record: OperationRecord): Boolean =
@@ -659,12 +660,12 @@ object PrivilegeRuntime {
             entered = true
             if (!corruptJournal || recoveryInFlight || machine.activeOperationId != null ||
                 machine.status.mode == BackendMode.UNSET || !corruptRecovery.mayReconnect(bootCount())) {
-                return@tryExclusive "请先重启设备，再连接所选后端并刷新状态"
+                return@tryExclusive BackendStrings.get(R.string.err_reboot_connect_refresh)
             }
             val selected = backend(machine.status.mode)
             val connection = selected.connect(context, machine.status.epoch)
             recoveryConnection = connection
-            if (!connection.isReady) { publish(); return@tryExclusive "请先连接所选后端并完成授权" }
+            if (!connection.isReady) { publish(); return@tryExclusive BackendStrings.get(R.string.err_connect_authorize_first) }
             check(preferences().edit().putBoolean("restore_paused", true).commit()) { "Cannot persist automatic restore pause" }
             val fingerprint = corruptRecovery.beginVerification(bootCount())
             recoveryInFlight = true
@@ -680,22 +681,22 @@ object PrivilegeRuntime {
             val observed = withTimeoutOrNull(TIMEOUT_MS) { task.await() }
             if (observed != null) {
                 finishCorruptReadback(observed, fingerprint, connection)
-                if (observed && !corruptJournal) null else "核对未通过，记录与备份已保留；请重启设备后重试"
+                if (observed && !corruptJournal) null else BackendStrings.get(R.string.err_check_failed_reboot)
             } else {
                 scope.launch {
                     val verified = task.await()
                     OperationCoordinator.serialized { finishCorruptReadback(verified, fingerprint, connection) }
                 }
-                "核对仍在进行，记录与备份已保留；请稍后刷新状态"
+                BackendStrings.get(R.string.err_check_in_progress)
             }
         }
-        if (entered) error else "当前操作尚未完成，请稍后再核对"
+        if (entered) error else BackendStrings.get(R.string.err_op_running_check_later)
     } catch (cancelled: CancellationException) {
         throw cancelled
     } catch (failure: Exception) {
         Log.e(TAG, "Corrupt journal recovery remains blocked", failure)
         publish()
-        "无法完成核对，记录与备份已保留；请刷新状态"
+        BackendStrings.get(R.string.err_check_failed_refresh)
     }
 
     private fun finishCorruptReadback(verified: Boolean, fingerprint: String, connection: BackendStatus) {
@@ -704,7 +705,7 @@ object PrivilegeRuntime {
                 corruptRecovery.archiveVerified(fingerprint)
                 corruptJournal = false
                 check(machine.reconcile(true, true, true))
-                machine.updateConnection(connection.copy(message = "已核对当前状态并保留损坏记录；无法确认上次操作结果。请检查 IMS 配置、系统网络与 VoLTE 原值备份；自动应用仍暂停"))
+                machine.updateConnection(connection.copy(message = BackendStrings.get(R.string.err_checked_corrupt_kept)))
                 Log.i(TAG, "Corrupt operation journal archived after explicit recovery readback")
             }
         } catch (failure: Exception) {

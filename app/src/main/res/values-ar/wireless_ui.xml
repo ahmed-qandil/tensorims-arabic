@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wireless_ui_instructions">1. اضغط \"الإقران عبر الإشعار\" واسمح بالإشعارات. على أندرويد 17 أو أحدث، اسمح أيضاً بالوصول إلى الأجهزة القريبة للاكتشاف المحلي.\n2. في خيارات المطوّر، افتح التصحيح اللاسلكي وفعّله، ثم اختر \"إقران الجهاز برمز إقران\".\n3. أبقِ مربع حوار رمز الإقران مفتوحاً. اسحب ستارة الإشعارات للأسفل، وأدخل رمزه المكوّن من ستة أرقام في إشعار TensorIMS، وأرسله. لا تعد إلى هذا التطبيق لإدخال الرمز.\nيكتشف التطبيق المنافذ تلقائياً، ثم يتصل بالخدمة الخاصة ويتحقق منها بعد الإقران.</string>
+    <string name="wireless_ui_privacy">ينطبق الإقران على هذا التطبيق على هذا الجهاز فقط. لا يُحفظ رمز الإقران ولا يُسجَّل. التصحيح اللاسلكي لا يُفعَّل إلا منك في إعدادات أندرويد.</string>
+    <string name="wireless_ui_pair_and_open_settings">الإقران عبر الإشعار</string>
+    <string name="wireless_ui_reconnect_help">أقرنت بالفعل؟ فعّل التصحيح اللاسلكي واستخدم الزر أدناه لاكتشاف منفذ اتصاله الحالي وإعادة تشغيل الخدمة الخاصة. إذا نسي أندرويد هذا التطبيق، أقرن مجدداً.</string>
+    <string name="wireless_ui_reconnect">إعادة الاتصال بالجهاز المقترن</string>
+    <string name="wireless_ui_preparing">جارٍ تجهيز إشعار الإقران…</string>
+    <string name="wireless_ui_searching_pairing">في انتظار فتحك \"إقران الجهاز برمز إقران\" في التصحيح اللاسلكي…</string>
+    <string name="wireless_ui_waiting_code">تم العثور على منفذ الإقران. أبقِ مربع حوار الإقران في أندرويد مفتوحاً وأدخل الرمز في الإشعار.</string>
+    <string name="wireless_ui_pairing">جارٍ إقران هذا التطبيق… أبقِ مربع حوار الإقران في أندرويد مفتوحاً.</string>
+    <string name="wireless_ui_searching_connect">جارٍ اكتشاف منفذ اتصال التصحيح اللاسلكي…</string>
+    <string name="wireless_ui_starting">جارٍ تشغيل الخدمة الخاصة والتحقق منها…</string>
+    <string name="wireless_ui_success">تم التحقق من تشغيل الخدمة الخاصة.</string>
+    <string name="wireless_ui_failed">لم يكتمل إعداد التصحيح اللاسلكي. راجع التفاصيل أدناه ثم أعد المحاولة.</string>
+    <string name="wireless_ui_background_help">يستمر هذا الإجراء أثناء فتح إعدادات أندرويد. تُحظر تغييرات الوضع وإجراءات البدء الأخرى حتى ينتهي أو يُلغى.</string>
+    <string name="wireless_ui_cancel">إلغاء الإعداد اللاسلكي</string>
+    <string name="wireless_ui_notifications_title">الإشعارات مطلوبة</string>
+    <string name="wireless_ui_notifications_required">يجب إرسال رمز الإقران من إشعار بينما يبقى مربع حوار الإقران في أندرويد مفتوحاً. فعّل إشعارات التطبيق وقناة إشعارات التصحيح اللاسلكي في الإعدادات، ثم عد واضغط زر الإقران أو إعادة الاتصال مجدداً.</string>
+    <string name="wireless_ui_network_title">إذن الاكتشاف المحلي مطلوب</string>
+    <string name="wireless_ui_network_required">على أندرويد 17 أو أحدث، يحتاج الاكتشاف التلقائي للتصحيح اللاسلكي إلى إذن الشبكة المحلية للأجهزة القريبة. اسمح به في إعدادات أذونات هذا التطبيق، ثم عد واضغط زر الإقران أو إعادة الاتصال مجدداً.</string>
+    <string name="wireless_ui_open_permission_settings">فتح إعدادات الأذونات</string>
+    <string name="wireless_ui_settings_unavailable">تعذّر فتح إعدادات أندرويد. افتح صفحة الإعدادات المناسبة يدوياً.</string>
+</resources>

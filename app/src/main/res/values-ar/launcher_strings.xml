@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launcher_pair_port">يجب أن يكون منفذ الإقران بين 1 و65535</string>
+    <string name="launcher_pair_code">أدخل رمز الإقران المكوّن من ستة أرقام</string>
+    <string name="launcher_connect_port">يجب أن يكون منفذ الاتصال بين 1 و65535</string>
+    <string name="launcher_connected">الخدمة الداخلية متصلة بالفعل</string>
+    <string name="launcher_busy">هناك عملية إقران أو بدء قيد التشغيل بالفعل</string>
+    <string name="launcher_timeout">انتهت مهلة العملية. تحقق من التصحيح اللاسلكي أو الوصول إلى الروت؛ لم يتم تأكيد اتصال الخدمة الداخلية</string>
+    <string name="launcher_identity">الإقران مفقود أو بيانات اعتماده غير متاحة. أقرن مجدداً</string>
+    <string name="launcher_pair_failed">فشل الإقران. تحقق من صحة رمز الإقران وأنه ما زال صالحاً</string>
+    <string name="launcher_root_failed">رُفض الوصول إلى الروت أو فشل أمر البدء</string>
+    <string name="launcher_protocol">عدم تطابق بروتوكول التصحيح اللاسلكي. تحقق من منفذي الإقران والاتصال</string>
+    <string name="launcher_socket_timeout">انتهت مهلة اتصال التصحيح اللاسلكي. تحقق من المنفذ وحاول مجدداً</string>
+    <string name="launcher_connect_failed">تعذّر الاتصال بالتصحيح اللاسلكي على هذا الجهاز. تحقق من إعداد النظام والمنفذ</string>
+    <string name="launcher_failed">فشلت عملية الخدمة الداخلية (%1$s). تحقق من الإقران والوصول إلى الروت والتثبيت الحالي</string>
+    <string name="launcher_native">تعذّر تحميل مكوّن الإقران. تحقق من أن هذه هي نسخة arm64</string>
+    <string name="launcher_handshake">أُرسل أمر البدء، لكن لم يُستلم اتصال موثوق بالخدمة الداخلية. تحقق من التثبيت وتوافق النظام</string>
+</resources>

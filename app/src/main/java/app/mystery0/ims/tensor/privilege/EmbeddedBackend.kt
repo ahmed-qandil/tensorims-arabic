@@ -11,13 +11,14 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import app.mystery0.ims.tensor.R
 
 class EmbeddedBackend : PrivilegeBackend {
     override val mode = BackendMode.EMBEDDED
     private var instanceId: String? = null
     override suspend fun connect(context: Context, epoch: Long): BackendStatus = withContext(Dispatchers.IO) {
         val server = EmbeddedConnection.current() ?: return@withContext BackendStatus(mode, ConnectionState.DISCONNECTED,
-            epoch, errorCode = "EMBEDDED_UNAVAILABLE", message = "请主动启动内置服务")
+            epoch, errorCode = "EMBEDDED_UNAVAILABLE", message = BackendStrings.get(R.string.err_start_embedded_service))
         try {
             val result = server.status
             check(result.getInt(BridgeProtocol.PROTOCOL) == BridgeProtocol.VERSION) { "VERSION_MISMATCH" }
@@ -25,9 +26,9 @@ class EmbeddedBackend : PrivilegeBackend {
             val error = result.getString(BridgeProtocol.ERROR_CODE)
             BackendStatus(mode, if (error == null) ConnectionState.READY else ConnectionState.RECOVERY_REQUIRED,
                 epoch, result.getInt(BridgeProtocol.RUNTIME_UID), result.getLong(BridgeProtocol.VERSION_CODE).toString(),
-                error, if (error != null) "旧操作或权限清理尚未确认" else null)
+                error, if (error != null) BackendStrings.get(R.string.err_old_op_unconfirmed) else null)
         } catch (_: Throwable) {
-            BackendStatus(mode, ConnectionState.BLOCKED, epoch, errorCode = "AUTH_FAILED", message = "无法验证内置服务，请重新启动")
+            BackendStatus(mode, ConnectionState.BLOCKED, epoch, errorCode = "AUTH_FAILED", message = BackendStrings.get(R.string.err_verify_embedded_restart))
         }
     }
     override suspend fun execute(context: Context, operation: OperationType, arguments: Bundle, operationId: String, epoch: Long): Bundle? = withContext(Dispatchers.IO) {

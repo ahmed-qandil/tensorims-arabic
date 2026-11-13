@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_appearance">المظهر واللغة</string>
+    <string name="settings_theme">سمة التطبيق</string>
+    <string name="settings_theme_light">فاتح</string>
+    <string name="settings_theme_dark">داكن</string>
+    <string name="settings_logs">السجلات</string>
+    <string name="settings_auto_capture">تسجيل السجلات تلقائياً</string>
+    <string name="settings_auto_capture_summary">يسجّل عند بدء عملية التطبيق لتشخيص مشاكل البدء والتطبيق التلقائي. يحتفظ بما يصل إلى 2,000 إدخال حديث في الذاكرة؛ تُفقد السجلات عند انتهاء العملية.</string>
+</resources>

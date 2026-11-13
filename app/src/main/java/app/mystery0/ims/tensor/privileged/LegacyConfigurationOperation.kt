@@ -80,7 +80,7 @@ internal fun SessionInstrumentation.applyLegacyConfiguration(arguments: Bundle) 
     if (failure != null) {
         Log.e("LegacyConfiguration", "Carrier configuration result is not successful", failure)
         val message = if (resetRequested && progress.uncertainOnFailure) {
-            "已尝试清除运营商配置覆盖，但系统没有提供可独立核验的删除完成证据，未记为重置成功。请先核对当前配置，自动恢复保持暂停。"
+            BackendStrings.get(R.string.err_reset_clear_unverified)
         } else failure.toPrivilegedErrorMessage()
         result.putString(ImsModifier.BUNDLE_RESULT_MSG, message)
         result.putString(BridgeProtocol.MESSAGE, message)

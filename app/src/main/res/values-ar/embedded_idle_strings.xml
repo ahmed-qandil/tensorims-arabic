@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="embedded_idle_title">الإيقاف التلقائي للخدمة الداخلية الخاملة</string>
+    <string name="embedded_idle_on">يحاول الإيقاف بعد %1$d دقيقة تقريباً من بقاء التطبيق في الخلفية وانتهاء المهام.</string>
+    <string name="embedded_idle_off">لا يوجد إيقاف خمول مؤقت. يظل الإيقاف الآمن بعد استرداد أندرويد للتطبيق سارياً.</string>
+    <string name="embedded_idle_delay">مهلة الإيقاف</string>
+    <string name="embedded_idle_minutes">%1$d دقيقة</string>
+    <string name="embedded_idle_input_help">الافتراضي: دقيقتان. اختر من 1 إلى 30 دقيقة. العودة إلى التطبيق تلغي المؤقت؛ إكمال مهام الخلفية يعيد تشغيله.</string>
+    <string name="embedded_idle_input_label">المهلة (بالدقائق)</string>
+    <string name="embedded_idle_input_error">أدخل عدداً صحيحاً من 1 إلى 30</string>
+    <string name="embedded_idle_timing_note">التوقيت تقريبي. لا يُبقي TensorIMS نفسه نشطاً من أجل هذا المؤقت، وقد تؤثر جدولة أندرويد فيه. مع مهلات أطول، قد يسترد أندرويد التطبيق قبل انتهاء المؤقت. ستخرج الخدمة الداخلية أيضاً بمجرد تأكيد اكتمال المهام وتنظيف الأذونات، دون انتظار المهلة الكاملة. تبقى آلية الأمان هذه نشطة عندما يكون هذا المفتاح مغلقاً.</string>
+    <string name="embedded_idle_restart_note">تُحتفظ بالإعدادات المطبقة والنسخ الاحتياطية للقيم الأصلية وبيانات الإقران. في المرة القادمة، شغّل الخدمة يدوياً؛ قد يتطلب التصحيح اللاسلكي خطوات إضافية.</string>
+</resources>

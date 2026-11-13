@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_ims_status">حالة IMS</string>
+    <string name="nav_ims_status_summary">عرض التسجيل وقدرات الاتصال، واستكشاف مشاكل IMS وإصلاحها</string>
+    <string name="nav_all_sims_hint">ضبط جميع الشرائح النشطة معاً</string>
+    <string name="nav_sim_slot">الشريحة %1$d</string>
+    <string name="nav_close">إغلاق</string>
+    <string name="nav_snapshot_note">لقطة لحالة الشبكة الحالية. القدرات غير المتاحة لا تشير بالضرورة إلى مشكلة في الإعدادات.</string>
+    <string name="nav_restart_done">اكتمل طلب إعادة التشغيل. جارٍ تحديث الحالة؛ تحقق من أحدث نتيجة لتأكيد التسجيل.</string>
+    <string name="nav_restart_failed">لم تكتمل إعادة التشغيل. تحقق من اتصال الامتيازات ورسالة الخطأ قبل إعادة المحاولة.</string>
+    <string name="nav_restarting">جارٍ إعادة التشغيل…</string>
+    <string name="nav_reset_configuration">إعادة ضبط إعدادات المشغّل</string>
+    <string name="nav_reset_single_sim">اختر شريحة فردية في الرئيسية قبل إعادة ضبط إعداداتها.</string>
+    <string name="nav_reset_failed_snapshot">لم يتم تأكيد نتيجة إعادة الضبط. احتُفظ بالمسودة، لكن اللقطة السابقة لم تعد صالحة. اقرأ الإعدادات مجدداً قبل إجراء أي تغييرات أخرى.</string>
+    <string name="reset_request_unverified">اكتمل طلب إعادة الضبط وقُرئت الإعدادات الحالية، لكن النظام لا يستطيع التحقق بشكل مستقل من إزالة التجاوزات. التطبيق التلقائي متوقف؛ أعد تحميل الإعدادات وافحصها.</string>
+</resources>

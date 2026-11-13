@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="wireless_service_title">التصحيح اللاسلكي لـ TensorIMS</string>
+    <string name="wireless_service_permissions">اسمح بالإشعارات واكتشاف الشبكة المحلية قبل البدء. لم تبدأ جلسة التصحيح اللاسلكي.</string>
+    <string name="wireless_service_unavailable">تعذّر تشغيل إشعار الإقران. أبقِ TensorIMS ظاهراً، وتحقق من وصول الإشعارات، وحاول مجدداً.</string>
+    <string name="wireless_service_timeout">انتهت مهلة الإعداد اللاسلكي. عد إلى TensorIMS وابدأ مجدداً؛ لم يُحفظ أي رمز إقران.</string>
+    <string name="wireless_service_discovery_failed">تعذّر اكتشاف خدمة التصحيح اللاسلكي لهذا الجهاز (%1$s). تحقق من Wi-Fi والتصحيح اللاسلكي وإذن الشبكة المحلية، ثم أعد المحاولة.</string>
+    <string name="wireless_service_code_invalid">أدخل الأرقام الستة الظاهرة حالياً في مربع حوار الإقران في النظام.</string>
+    <string name="wireless_service_retry">لم يُقبل هذا الرد. أدخل رمز الإقران الحالي مجدداً.</string>
+    <string name="wireless_service_interrupted">تمت مقاطعة الإعداد اللاسلكي. ابدأ مجدداً من TensorIMS.</string>
+    <string name="wireless_service_searching_pairing">فعّل التصحيح اللاسلكي واضغط \"إقران الجهاز برمز إقران\". أبقِ مربع الحوار مفتوحاً. بمجرد العثور عليه، اسحب الإشعارات للأسفل وأدخل الرمز في إشعار TensorIMS. جارٍ البحث…</string>
+    <string name="wireless_service_code_ready_title">تم العثور على الجهاز — أدخل رمز الإقران</string>
+    <string name="wireless_service_enter_code">أبقِ مربع حوار الإقران في النظام مفتوحاً. اسحب الإشعارات للأسفل، ووسّع هذا الإشعار، واضغط \"إدخال رمز الإقران\" لإدخال الأرقام الستة من مربع الحوار.</string>
+    <string name="wireless_service_pairing">جارٍ الإقران الآمن مع هذا الجهاز… أبقِ مربع حوار الإقران في النظام مفتوحاً.</string>
+    <string name="wireless_service_searching_connect">جارٍ اكتشاف منفذ اتصال التصحيح اللاسلكي لهذا الجهاز…</string>
+    <string name="wireless_service_starting">جارٍ تشغيل خدمة TensorIMS الخاصة…</string>
+    <string name="wireless_service_success">خدمة TensorIMS الخاصة متصلة. يمكنك العودة إلى TensorIMS.</string>
+    <string name="wireless_service_code_label">رمز الإقران المكوّن من ستة أرقام</string>
+    <string name="wireless_service_code_action">إدخال رمز الإقران</string>
+    <string name="wireless_service_paired_connect_failed">نجح الإقران، لكن الاتصال لم يكتمل: %1$s. استخدم \"إعادة الاتصال\" في TensorIMS دون إعادة الإقران.</string>
+    <string name="wireless_service_ambiguous">عُثر على أكثر من خدمة تصحيح لاسلكي محلية. أغلق نوافذ الإقران أو رمز QR الأخرى، وأبقِ مربع حوار رمز الإقران وحده مفتوحاً، ثم أعد المحاولة.</string>
+</resources>

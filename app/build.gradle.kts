@@ -114,8 +114,6 @@ android {
             @Suppress("UnstableApiUsage")
             vcsInfo.include = false
             proguardFiles("proguard-rules.pro")
-            versionNameSuffix = ".r$gitVersionCode.$gitVersionName"
-            signingConfig = signingConfigs.getByName("sign")
         }
     }
     compileOptions {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connection_ready_help">الخدمة متصلة. يمكنك الآن ضبط IMS.</string>
+    <string name="connection_open_ims">فتح إعدادات IMS</string>
+    <string name="connection_home">العودة إلى الرئيسية</string>
+    <string name="connection_details">تفاصيل الاتصال</string>
+    <string name="connection_hide_details">إخفاء تفاصيل الاتصال</string>
+    <string name="connection_working">عملية قيد التنفيذ…</string>
+    <string name="connection_progress">الاتصال جارٍ</string>
+    <string name="connection_waiting_code">تم العثور على خدمة الإقران. أبقِ مربع حوار الإقران في النظام مفتوحاً، واسحب ستارة الإشعارات للأسفل، وأدخل الرمز المكوّن من ستة أرقام في إشعار TensorIMS.</string>
+    <string name="connection_recovery_start">اتصل لمراجعة الاستعادة</string>
+    <string name="connection_paired_failed">اكتمل الإقران في هذه الجلسة، لكن الاتصال لم ينتهِ. حاول إعادة الاتصال أولاً.</string>
+    <string name="connection_failed">الاتصال غير مكتمل. تحقق من التصحيح اللاسلكي وحاول مجدداً.</string>
+    <string name="connection_connect_help">أقرنت من قبل؟ صِل الهاتف بشبكة Wi-Fi وفعّل التصحيح اللاسلكي في خيارات المطوّر، ثم اتصل وشغّل الخدمة.</string>
+    <string name="connection_connect">الاتصال وتشغيل الخدمة</string>
+    <string name="connection_retry">إعادة الاتصال</string>
+    <string name="connection_pair_title">الاستخدام الأول أو إعادة الإقران</string>
+    <string name="connection_pair_steps">1. اضغط أدناه واسمح بالإشعارات والاكتشاف المحلي عند الطلب.\n2. افتح التصحيح اللاسلكي واختر \"إقران الجهاز برمز إقران\".\n3. أبقِ مربع الحوار مفتوحاً، واسحب الإشعارات للأسفل، وأدخل الرمز في TensorIMS.</string>
+    <string name="connection_other_methods">طرق تشغيل أخرى (الروت)</string>
+    <string name="connection_hide_root">إخفاء التشغيل بالروت</string>
+</resources>

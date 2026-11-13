@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="computer_adb_title">التشغيل عبر ADB من الكمبيوتر</string>
+    <string name="computer_adb_help">فعّل تصحيح USB أو التصحيح اللاسلكي، وصّل كمبيوترك عبر ADB، ثم نفّذ الأمر من هذا التطبيق أثناء فتح مهلة البدء القصيرة. قد يتغير مسار التثبيت بعد تحديث التطبيق. Shizuku الخارجي غير مطلوب.</string>
+    <string name="computer_adb_generate">توليد أمر البدء</string>
+    <string name="computer_adb_steps">1. ثبّت أدوات Android Platform على كمبيوترك، وصّل هذا الجهاز عبر USB أو ADB لاسلكي وافوّضه.\n2. تحقق من adb devices، ثم شغّل الأمر الكامل أدناه في طرفية الكمبيوتر. إذا كانت عدة أجهزة متصلة، أضف -s DEVICE_SERIAL بعد adb.\n3. أبقِ التطبيق قيد التشغيل وانتظر حتى تصبح الخدمة جاهزة.</string>
+    <string name="computer_adb_wait">تُغلق مهلة البدء هذه خلال 110 ثوانٍ تقريباً. بعد الإلغاء أو انتهاء المهلة أو خروج عملية التطبيق، افتح مهلة جديدة قبل تشغيل الأمر مجدداً. يمكن إعادة استخدام مسار التثبيت حتى يُحدَّث التطبيق.</string>
+    <string name="computer_adb_copy">نسخ الأمر</string>
+    <string name="computer_adb_send">إرسال</string>
+    <string name="computer_adb_share_unavailable">لا يوجد تطبيق يمكنه مشاركة هذا الأمر حالياً.</string>
+    <string name="computer_adb_timeout">انتهت مهلة بدء الكمبيوتر. لم يُقبل أي خادم. أعد فتح المهلة في هذا التطبيق قبل تشغيل الأمر مجدداً.</string>
+</resources>

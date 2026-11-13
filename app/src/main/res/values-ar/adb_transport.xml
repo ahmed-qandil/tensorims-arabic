@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adb_pair_diagnostic">تشخيص الإقران: %1$s / %2$s. أرفق هذا السطر عند الإبلاغ عن الفشل؛ لا تشارك رمز الإقران الخاص بك</string>
+    <string name="adb_service_rejected">اتصل التصحيح اللاسلكي، لكن أندرويد رفض طلب تشغيل الخدمة الداخلية. تحقق من تثبيت التطبيق وقيود النظام</string>
+</resources>

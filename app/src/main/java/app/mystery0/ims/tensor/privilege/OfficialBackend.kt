@@ -14,6 +14,7 @@ import app.mystery0.ims.tensor.bridge.BridgeProtocol
 import kotlinx.coroutines.CompletableDeferred
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuBinderWrapper
+import app.mystery0.ims.tensor.R
 
 /** 外置 Binder 只在此适配器和显式外置会话内使用，绝不停止外置服务。 */
 class OfficialBackend : PrivilegeBackend {
@@ -40,19 +41,19 @@ class OfficialBackend : PrivilegeBackend {
     override suspend fun connect(context: Context, epoch: Long): BackendStatus = try {
         when {
             !Shizuku.pingBinder() -> BackendStatus(mode, ConnectionState.DISCONNECTED, epoch,
-                errorCode = "NOT_RUNNING", message = "请先启动外置 Shizuku")
+                errorCode = "NOT_RUNNING", message = BackendStrings.get(R.string.err_start_shizuku))
             Shizuku.isPreV11() -> BackendStatus(mode, ConnectionState.BLOCKED, epoch,
-                errorCode = "VERSION_MISMATCH", message = "请更新外置 Shizuku")
+                errorCode = "VERSION_MISMATCH", message = BackendStrings.get(R.string.err_update_shizuku))
             Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED ->
                 BackendStatus(mode, ConnectionState.BLOCKED, epoch, errorCode = "PERMISSION_REQUIRED",
-                    message = "请允许 TensorIMS 使用外置 Shizuku")
+                    message = BackendStrings.get(R.string.err_grant_shizuku))
             else -> BackendStatus(mode, ConnectionState.READY, epoch, runtimeUid = Shizuku.getUid(),
                 version = Shizuku.getVersion().toString())
         }
     } catch (failure: Throwable) {
         Log.w(TAG, "External connection check failed", failure)
         BackendStatus(mode, ConnectionState.DISCONNECTED, epoch, errorCode = "NOT_RUNNING",
-            message = "无法连接外置 Shizuku，请检查服务状态")
+            message = BackendStrings.get(R.string.err_connect_shizuku))
     }
 
     override suspend fun execute(

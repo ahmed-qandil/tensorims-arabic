@@ -1,9 +1,5 @@
 package app.mystery0.ims.tensor.ui.screens
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
@@ -46,13 +42,6 @@ fun AppSettingsScreen(
 ) {
     var dialog by rememberSaveable { mutableStateOf<String?>(null) }
     val context = LocalContext.current
-    fun openLink(url: String) {
-        try {
-            context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-        } catch (_: ActivityNotFoundException) {
-            Toast.makeText(context, R.string.settings_link_unavailable, Toast.LENGTH_SHORT).show()
-        }
-    }
     Scaffold(contentWindowInsets = pageContentInsets, topBar = {
         CenterAlignedTopAppBar(
             title = { Text(stringResource(R.string.app_settings)) },
@@ -96,23 +85,6 @@ fun AppSettingsScreen(
                     icon = Icons.Rounded.Description, onClick = onOpenLogcat,
                 )
             }
-            SettingsSection(stringResource(R.string.settings_about)) {
-                GroupedSettingsItem(
-                    title = stringResource(R.string.settings_version),
-                    first = true,
-                    summary = stringResource(R.string.settings_version_value, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE),
-                    icon = Icons.Rounded.Info,
-                )
-                GroupedSettingsItem(
-                    title = "PixelTailorCN", summary = "pixel.mystery0.app", icon = Icons.Rounded.Public,
-                    onClick = { openLink("https://pixel.mystery0.app") },
-                )
-                GroupedSettingsItem(
-                    last = true,
-                    title = stringResource(R.string.settings_telegram), summary = "@pixel_tailor_cn", icon = Icons.Rounded.Forum,
-                    onClick = { openLink("https://t.me/pixel_tailor_cn") },
-                )
-            }
             ScrollEndSpacer(padding)
         }
     }
@@ -148,7 +120,6 @@ private fun themeLabel(theme: AppTheme): String = stringResource(when (theme) {
 private fun languageLabel(tag: String): String = when (tag) {
     "" -> stringResource(R.string.app_language_auto)
     "en" -> "English"
-    "zh-CN" -> "简体中文"
     // 使用本语言名称，便于切换到陌生语言后恢复。
     else -> Locale.forLanguageTag(tag).let { it.getDisplayName(it) }
 }
