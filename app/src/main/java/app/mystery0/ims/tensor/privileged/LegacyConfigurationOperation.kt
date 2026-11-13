@@ -13,6 +13,7 @@ import app.mystery0.ims.tensor.bridge.CarrierVerification
 import app.mystery0.ims.tensor.bridge.CarrierWriteProgress
 import app.mystery0.ims.tensor.bridge.CarrierResetCompletionPolicy
 import app.mystery0.ims.tensor.R
+import app.mystery0.ims.tensor.privilege.BackendStrings
 import app.mystery0.ims.tensor.model.TargetConfigMapper
 
 /** 主路径与 Broker 共用逐卡写入/回读；旧历史 false 不生成新关闭值。 */
