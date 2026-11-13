@@ -21,11 +21,11 @@ jobs:
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" "ndk;29.0.14206865" "cmake;3.22.1"
       - name: Build unsigned release APK
-        run: ./gradlew --no-daemon assembleRelease
+        run: ./gradlew --no-daemon assembleTensorRelease
       - name: Package artifacts
         run: |
           mkdir out
-          cp app/build/outputs/apk/release/app-release-unsigned.apk "out/TensorIMS-v4.0.2-ar1-unsigned.apk"
+          cp app/build/outputs/apk/tensor/release/app-tensor-release-unsigned.apk "out/TensorIMS-v4.0.2-ar1-unsigned.apk"
           git archive --format=zip -o "out/TensorIMS-v4.0.2-ar1-source.zip" HEAD
       - name: Create release
         env:
